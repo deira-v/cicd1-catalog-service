@@ -2,11 +2,10 @@ package ie.atu.cicd1.catalog.cicd1catalogservice.service;
 
 import ie.atu.cicd1.catalog.cicd1catalogservice.model.Product;
 import ie.atu.cicd1.catalog.cicd1catalogservice.repository.ProductRepository;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,8 +26,8 @@ public class ProductService {
         product.setId(null);
         return repository.save(product);
     }
-    public Product getById(long id){
+    public Product getById(Long id){
         return repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatusCode.NOT_FOUND, "Product not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
     }
 }
