@@ -9,6 +9,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    @Query("SELECT p FROM Product p WHERE p.price >= :minprice ORDER BY p.price ASC")
+    @Query("""
+        SELECT p 
+        FROM Product p 
+        WHERE p.price >= :minprice 
+        ORDER BY p.price ASC
+        """)
     List<Product>findByMinimumPrice(@Param("minPrice")BigDecimal minPrice);
 }
