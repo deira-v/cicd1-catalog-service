@@ -1,22 +1,27 @@
 package ie.atu.cicd1.catalog.cicd1catalogservice.service;
 
 import ie.atu.cicd1.catalog.cicd1catalogservice.model.Product;
+import ie.atu.cicd1.catalog.cicd1catalogservice.repository.CategoryRepository;
 import ie.atu.cicd1.catalog.cicd1catalogservice.repository.ProductRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 public class ProductService {
+
     //private final List<Product> products = new ArrayList<>();
     private final ProductRepository repository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductService(ProductRepository repository) {
+    public ProductService(ProductRepository repository,
+                          CategoryRepository categoryRepository) {
         this.repository = repository;
+        this.categoryRepository = categoryRepository;
     }
-    //private long nextId = 1;
 
     public List<Product> getAll() {
         return repository.findAll();
@@ -29,5 +34,9 @@ public class ProductService {
     public Product getById(Long id){
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
+    }
+
+    public List<Product>getByMinimumPrice(BigDecimal minPrice){
+        return repository.findByMinimumPrice(minPrice);
     }
 }
